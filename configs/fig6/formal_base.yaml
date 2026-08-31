@@ -1,0 +1,75 @@
+run:
+  method: JIT-APFRL
+  seed: 3407
+data:
+  dataset_path: data/processed/benchmark_v1.npz
+  split: train
+environment:
+  state_dim: 14
+  num_nodes: 20
+  horizon: 200
+  action_levels: [0.25, 0.5, 0.75, 1.0]
+  initial_backlog: 0.1
+  initial_availability: 0.9
+  backlog_normalizer: 4.0
+  maximum_backlog: 4.0
+  minimum_availability: 0.15
+  minimum_effective_capacity: 0.05
+  minimum_congestion_factor: 0.55
+  interference_strength: 0.2
+  minimum_task_work: 0.1
+  service_rate: 3.0
+  shared_queue_coupling: 0.05
+  dispatch_overhead_ms: 3.0
+  base_service_ms: 18.0
+  minimum_delay_ms: 1.0
+  delay_uncertainty_ms: 1.0
+  capacity_uncertainty: 0.01
+  deadline_min_ms: 35.0
+  deadline_max_ms: 90.0
+  throughput_reward: 10.0
+  allocation_cost: 0.8
+  backlog_cost: 1.5
+  physical_tardiness_cost: 0.0
+  availability_persistence: 0.75
+  allocation_fatigue: 0.03
+  idle_recovery: 0.02
+privacy:
+  mode: revised_coordinate
+  episode_budget: 10.0
+  epsilon_min: 0.01
+  epsilon_max: 0.2
+  rho_per_ms: 0.03
+model:
+  hidden_dim: 128
+  mad_window: 5
+  eta_noise: 0.25
+training:
+  federated_rounds: 400
+  checkpoint_interval: 25
+  ppo_epochs: 4
+  learning_rate: 0.0003
+  gamma: 0.99
+  gae_lambda: 0.95
+  clip_ratio: 0.2
+  value_coefficient: 0.5
+  entropy_coefficient: 0.01
+  max_grad_norm: 0.5
+  dual_step_size_initial: 0.01
+  dual_clock_exponent: 0.6
+aggregation:
+  eta_global: 0.05
+  async_launch_interval: 1.0
+  alpha: 1.0
+  beta: 1.0
+  chi: 1.0
+  l_max_ms: 50.0
+  jit_reference_ms_for_quality: 10000.0
+  jit_budget_ms_per_episode: 10000.0
+  normalize_dual_terms: true
+  staleness_scale: 20.0
+  normalize_quality_terms: true
+  base_train_time: 1.0
+  train_time_jitter: 0.3
+  base_network_time: 0.2
+  network_time_jitter: 0.5
